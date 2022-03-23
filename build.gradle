@@ -19,6 +19,23 @@ dependencies {
     compile(fileTree(dir: (starmadeDirectory + "lib"), include: "*.jar"))
 }
 
+jar {
+    destinationDirectory.set(file(starmadeDirectory + "mods"))
+    archiveFileName = modName + '.jar'
+    manifest {
+        attributes('Main-Class': modName)
+    }
+
+    from {
+        configurations.compile.collect {
+            if(!it.getPath().contains("StarMade") && it.getName().endsWith(".jar")) {
+                it.isDirectory() ? it : zipTree(it)
+            }
+            else return null;
+        }
+    }
+}
+
 test {
     useJUnitPlatform()
 }
