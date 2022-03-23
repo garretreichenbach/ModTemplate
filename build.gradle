@@ -1,0 +1,24 @@
+plugins {
+    id 'java'
+}
+
+group 'thederpgamer.modtemplate'
+version '1.0.0'
+
+def modName = 'ModTemplate'
+def starmadeDirectory = 'C:/Program Files (x86)/Steam/steamapps/common/StarMade/StarMade/'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+    compile(files(starmadeDirectory + "StarMade.jar"))
+    compile(fileTree(dir: (starmadeDirectory + "lib"), include: "*.jar"))
+}
+
+test {
+    useJUnitPlatform()
+}
