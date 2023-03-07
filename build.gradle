@@ -2,7 +2,6 @@ plugins {
     id 'java'
 }
 
-group 'thederpgamer.modtemplate'
 version '1.0.0'
 
 def modName = 'ModTemplate'
@@ -21,7 +20,7 @@ dependencies {
 
 jar {
     destinationDirectory.set(file(starmadeDirectory + "mods"))
-    archiveFileName = modName + '.jar'
+    archiveFileName = modName  + 'v' + version + '.jar'
     manifest {
         attributes('Main-Class': modName)
     }
