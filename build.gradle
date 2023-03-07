@@ -5,15 +5,13 @@ plugins {
 version '1.0.0'
 
 def modName = 'ModTemplate'
-def starmadeDirectory = 'C:/Program Files (x86)/Steam/steamapps/common/StarMade/StarMade/'
+def starmadeDirectory = 'C:/Program Files (x86)/Steam/steamapps/common/StarMade/StarMade/' //Change this to your StarMade directory
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
     compile(files(starmadeDirectory + "StarMade.jar"))
     compile(fileTree(dir: (starmadeDirectory + "lib"), include: "*.jar"))
 }
@@ -27,9 +25,7 @@ jar {
 
     from {
         configurations.compile.collect {
-            if(!it.getPath().contains("StarMade") && it.getName().endsWith(".jar")) {
-                it.isDirectory() ? it : zipTree(it)
-            }
+            if(!it.getPath().contains("StarMade") && it.getName().endsWith(".jar")) it.isDirectory() ? it : zipTree(it)
             else return null;
         }
     }
