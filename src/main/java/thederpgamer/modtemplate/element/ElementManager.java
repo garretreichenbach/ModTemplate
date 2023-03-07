@@ -11,12 +11,6 @@ import thederpgamer.modtemplate.element.items.Item;
 
 import java.util.ArrayList;
 
-/**
- * <Description>
- *
- * @author TheDerpGamer
- * @version 1.0 - [03/05/2022]
- */
 public class ElementManager {
 
 	public enum FactoryType {NONE, CAPSULE_REFINERY, MICRO_ASSEMBLER, BASIC_FACTORY, STANDARD_FACTORY, ADVANCED_FACTORY}

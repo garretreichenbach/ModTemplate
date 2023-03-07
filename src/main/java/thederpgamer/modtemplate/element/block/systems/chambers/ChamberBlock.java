@@ -6,12 +6,6 @@ import org.schema.game.common.data.element.ElementInformation;
 import thederpgamer.modtemplate.ModTemplate;
 import thederpgamer.modtemplate.element.ElementManager;
 
-/**
- * <Description>
- *
- * @author TheDerpGamer
- * @version 1.0 - [03/05/2022]
- */
 public abstract class ChamberBlock {
 
 	protected ElementInformation blockInfo;

@@ -5,12 +5,6 @@ import org.schema.game.common.data.element.ElementKeyMap;
 import org.schema.schine.graphicsengine.core.GraphicsContext;
 import thederpgamer.modtemplate.element.ElementManager;
 
-/**
- * <Description>
- *
- * @author TheDerpGamer
- * @version 1.0 - [03/23/2022]
- */
 public class ExampleItem extends Item {
 
 	public ExampleItem() {
