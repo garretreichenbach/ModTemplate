@@ -12,8 +12,8 @@ repositories {
 }
 
 dependencies {
-    compile(files(starmadeDirectory + "StarMade.jar"))
-    compile(fileTree(dir: (starmadeDirectory + "lib"), include: "*.jar"))
+    implementation(files(starmadeDirectory + "StarMade.jar"))
+    implementation(fileTree(dir: (starmadeDirectory + "lib"), include: "*.jar"))
 }
 
 jar {
@@ -29,8 +29,4 @@ jar {
             else return null;
         }
     }
-}
-
-test {
-    useJUnitPlatform()
 }
