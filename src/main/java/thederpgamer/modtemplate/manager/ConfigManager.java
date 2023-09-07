@@ -3,12 +3,6 @@ package thederpgamer.modtemplate.manager;
 import api.mod.config.FileConfiguration;
 import thederpgamer.modtemplate.ModTemplate;
 
-/**
- * <Description>
- *
- * @author TheDerpGamer
- * @version 1.0 - [03/05/2022]
- */
 public class ConfigManager {
 
 	private static FileConfiguration mainConfig;

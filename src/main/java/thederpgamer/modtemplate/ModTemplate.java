@@ -3,19 +3,23 @@ package thederpgamer.modtemplate;
 import api.config.BlockConfig;
 import api.mod.StarMod;
 import org.apache.commons.io.IOUtils;
-import org.schema.schine.event.EventManager;
 import org.schema.schine.resource.ResourceLoader;
 import thederpgamer.modtemplate.element.ElementManager;
 import thederpgamer.modtemplate.element.items.ExampleItem;
 import thederpgamer.modtemplate.manager.ConfigManager;
-import thederpgamer.modtemplate.manager.LogManager;
+import thederpgamer.modtemplate.manager.EventManager;
+import thederpgamer.modtemplate.manager.PacketManager;
 import thederpgamer.modtemplate.manager.ResourceManager;
+import thederpgamer.modtemplate.utils.DataUtils;
 
-import javax.annotation.*;
+
+import javax.annotation.Nullable;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.file.*;
-import java.util.logging.*;
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -61,7 +65,7 @@ public class ModTemplate extends StarMod {
 
 	@Override
 	public byte[] onClassTransform(String className, byte[] byteCode) {
-		for (String name : overwriteClasses) if (className.endsWith(name)) return overwriteClass(className, byteCode);
+		for(String name : overwriteClasses) if(className.endsWith(name)) return overwriteClass(className, byteCode);
 		return super.onClassTransform(className, byteCode);
 	}
 
@@ -73,39 +77,78 @@ public class ModTemplate extends StarMod {
 	@Override
 	public void onBlockConfigLoad(BlockConfig config) {
 		ElementManager.addItem(new ExampleItem());
-
 		ElementManager.initialize();
-	}
-
-	/**
-	 * Use to register mod listeners.
-	 */
-	private void registerListeners() {
-
-	}
-
-	/**
-	 * Use to register mod packets.
-	 */
-	private void registerPackets() {
-
 	}
 
 	private byte[] overwriteClass(String className, byte[] byteCode) {
 		byte[] bytes = null;
 		try {
-			ZipInputStream file =
-					new ZipInputStream(Files.newInputStream(this.getSkeleton().getJarFile().toPath()));
-			while (true) {
+			ZipInputStream file = new ZipInputStream(new FileInputStream(this.getSkeleton().getJarFile()));
+			while(true) {
 				ZipEntry nextEntry = file.getNextEntry();
-				if (nextEntry == null) break;
-				if (nextEntry.getName().endsWith(className + ".class")) bytes = IOUtils.toByteArray(file);
+				if(nextEntry == null) break;
+				if(nextEntry.getName().endsWith(className + ".class")) bytes = IOUtils.toByteArray(file);
 			}
 			file.close();
-		} catch (IOException e) {
+		} catch(IOException e) {
 			e.printStackTrace();
 		}
-		if (bytes != null) return bytes;
+		if(bytes != null) return bytes;
 		else return byteCode;
+	}
+
+	private void initLogger() {
+		String logFolderPath = DataUtils.getWorldDataPath() + "/logs";
+		File logsFolder = new File(logFolderPath);
+		if(!logsFolder.exists()) logsFolder.mkdirs();
+		else {
+			if(logsFolder.listFiles() != null && logsFolder.listFiles().length > 0) {
+				File[] logFiles = new File[logsFolder.listFiles().length];
+				int j = logFiles.length - 1;
+				for(int i = 0; i < logFiles.length && j >= 0; i++) {
+					try {
+						if(!logFiles[i].getName().endsWith(".lck")) logFiles[j] = logFiles[i];
+						else logFiles[i].delete();
+						j--;
+					} catch(Exception ignored) { }
+				}
+
+				//Trim null entries
+				int nullCount = 0;
+				for(File value : logFiles) {
+					if(value == null) nullCount ++;
+				}
+
+				File[] trimmedLogFiles = new File[logFiles.length - nullCount];
+				int l = 0;
+				for(File file : logFiles) {
+					if(file != null) {
+						trimmedLogFiles[l] = file;
+						l++;
+					}
+				}
+
+				for(File logFile : trimmedLogFiles) {
+					if(logFile == null) continue;
+					String fileName = logFile.getName().replace(".txt", "");
+					int logNumber = Integer.parseInt(fileName.substring(fileName.indexOf("log") + 3)) + 1;
+					String newName = logFolderPath + "/log" + logNumber + ".txt";
+					if(logNumber < ConfigManager.getMainConfig().getInt("max-world-logs") - 1) logFile.renameTo(new File(newName));
+					else logFile.delete();
+				}
+			}
+		}
+		try {
+			File newLogFile = new File(logFolderPath + "/log0.txt");
+			if(newLogFile.exists()) newLogFile.delete();
+			newLogFile.createNewFile();
+			log = Logger.getLogger(newLogFile.getPath());
+			FileHandler handler = new FileHandler(newLogFile.getPath());
+			log.addHandler(handler);
+			SimpleFormatter formatter = new SimpleFormatter();
+			handler.setFormatter(formatter);
+		} catch(IOException exception) {
+			exception.printStackTrace();
+		}
 	}
 }

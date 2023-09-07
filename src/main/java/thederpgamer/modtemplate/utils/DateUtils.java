@@ -3,12 +3,6 @@ package thederpgamer.modtemplate.utils;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-/**
- * <Description>
- *
- * @author TheDerpGamer
- * @version 1.0 - [03/05/2022]
- */
 public class DateUtils {
 
 	public static float getAgeDays(Date date) {
