@@ -23,15 +23,17 @@ repositories {
 }
 
 dependencies {
-//    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
-//    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.2")
+    // Uncomment these and the test task at the bottom to enable unit tests. Heavily recommended for mods with data storage.
+    // Make sure to supply invalid values and other garbage in your tests, not just valid stuff, or you're not doing it right.
+    // https://www.jetbrains.com/help/idea/junit.html - Easy enough to follow tutorial.
+    // testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
+    // testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.2")
 
     implementation(files(starmade_root + "StarMade.jar"))
     implementation(fileTree(mapOf("dir" to starmade_root + "lib", "include" to listOf("*.jar"))))
 }
 
 tasks.withType<Jar> {
-    //noinspection GroovyAssignabilityCheck
     manifest {
         attributes["Built-By"] = System.getProperty("user.name")
         attributes["url"] = mod_url
@@ -64,6 +66,7 @@ tasks.register<JavaExec>("runGame") {
     }
 }
 
-tasks.withType<Test> {
+// See the note inside dependencies.
+//tasks.withType<Test> {
 //    useJUnitPlatform()
-}
+//}

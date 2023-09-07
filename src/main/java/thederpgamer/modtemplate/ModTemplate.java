@@ -3,6 +3,7 @@ package thederpgamer.modtemplate;
 import api.config.BlockConfig;
 import api.mod.StarMod;
 import org.apache.commons.io.IOUtils;
+import org.schema.schine.event.EventManager;
 import org.schema.schine.resource.ResourceLoader;
 import thederpgamer.modtemplate.element.ElementManager;
 import thederpgamer.modtemplate.element.items.ExampleItem;
@@ -10,17 +11,14 @@ import thederpgamer.modtemplate.manager.ConfigManager;
 import thederpgamer.modtemplate.manager.LogManager;
 import thederpgamer.modtemplate.manager.ResourceManager;
 
+import javax.annotation.*;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.file.*;
+import java.util.logging.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-/**
- * StarMade mod starting template.
- *
- * @author TheDerpGamer
- * @version 1.0 - [03/05/2022]
- */
 public class ModTemplate extends StarMod {
 
 	//Instance
@@ -28,8 +26,25 @@ public class ModTemplate extends StarMod {
 	public static ModTemplate getInstance() {
 		return instance;
 	}
-	public static void main(String[] args) { }
-	public ModTemplate() { }
+	public ModTemplate() {
+		instance = this;
+	}
+
+	//Logging
+	private static Logger log;
+	public static void logInfo(String message) {
+		log.info("[" + instance.getName() + "]" + message);
+	}
+
+	public static void logWarning(String message, @Nullable Exception exception) {
+		log.warning("[" + instance.getName() + "]" + message);
+		if(exception != null) exception.printStackTrace();
+	}
+
+	public static void logError(String message, @Nullable Exception exception) {
+		log.severe("[" + instance.getName() + "]" + message);
+		if(exception != null) exception.printStackTrace();
+	}
 
 	//Other
 	private final String[] overwriteClasses = { //Use this to overwrite specific vanilla classes
@@ -38,11 +53,10 @@ public class ModTemplate extends StarMod {
 
 	@Override
 	public void onEnable() {
-		instance = this;
 		ConfigManager.initialize(this);
-		LogManager.initialize();
-		registerListeners();
-		registerPackets();
+		initLogger();
+		EventManager.initialize(this);
+		PacketManager.initialize();
 	}
 
 	@Override
@@ -81,7 +95,7 @@ public class ModTemplate extends StarMod {
 		byte[] bytes = null;
 		try {
 			ZipInputStream file =
-					new ZipInputStream(new FileInputStream(this.getSkeleton().getJarFile()));
+					new ZipInputStream(Files.newInputStream(this.getSkeleton().getJarFile().toPath()));
 			while (true) {
 				ZipEntry nextEntry = file.getNextEntry();
 				if (nextEntry == null) break;
