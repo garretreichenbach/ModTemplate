@@ -12,7 +12,6 @@ import thederpgamer.modtemplate.manager.PacketManager;
 import thederpgamer.modtemplate.manager.ResourceManager;
 import thederpgamer.modtemplate.utils.DataUtils;
 
-
 import javax.annotation.Nullable;
 import java.io.File;
 import java.io.FileInputStream;
@@ -30,6 +29,7 @@ public class ModTemplate extends StarMod {
 	public static ModTemplate getInstance() {
 		return instance;
 	}
+	
 	public ModTemplate() {
 		instance = this;
 	}
