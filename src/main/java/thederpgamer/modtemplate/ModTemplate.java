@@ -29,8 +29,10 @@ public class ModTemplate extends StarMod {
 	public static ModTemplate getInstance() {
 		return instance;
 	}
-	public static void main(String[] args) {}
-	public ModTemplate() {}
+	
+	public ModTemplate() {
+		instance = this;
+	}
 
 	//Logging
 	private static Logger log;
@@ -55,7 +57,6 @@ public class ModTemplate extends StarMod {
 
 	@Override
 	public void onEnable() {
-		instance = this;
 		ConfigManager.initialize(this);
 		initLogger();
 		EventManager.initialize(this);
