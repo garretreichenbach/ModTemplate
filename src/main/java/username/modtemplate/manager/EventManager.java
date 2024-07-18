@@ -1,6 +1,6 @@
-package thederpgamer.modtemplate.manager;
+package username.modtemplate.manager;
 
-import thederpgamer.modtemplate.ModTemplate;
+import username.modtemplate.ModTemplate;
 
 public class EventManager {
 

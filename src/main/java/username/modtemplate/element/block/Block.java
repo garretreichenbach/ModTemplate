@@ -1,9 +1,9 @@
-package thederpgamer.modtemplate.element.block;
+package username.modtemplate.element.block;
 
 import api.config.BlockConfig;
 import org.schema.game.common.data.element.ElementCategory;
 import org.schema.game.common.data.element.ElementInformation;
-import thederpgamer.modtemplate.ModTemplate;
+import username.modtemplate.ModTemplate;
 
 public abstract class Block {
 

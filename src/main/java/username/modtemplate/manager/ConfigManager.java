@@ -1,14 +1,13 @@
-package thederpgamer.modtemplate.manager;
+package username.modtemplate.manager;
 
 import api.mod.config.FileConfiguration;
-import thederpgamer.modtemplate.ModTemplate;
+import username.modtemplate.ModTemplate;
 
 public class ConfigManager {
 
 	private static FileConfiguration mainConfig;
 	private static final String[] defaultMainConfig = {
-			"debug-mode: false",
-			"max-world-logs: 5"
+			"debug-mode: false"
 	};
 
 	public static void initialize(ModTemplate instance) {

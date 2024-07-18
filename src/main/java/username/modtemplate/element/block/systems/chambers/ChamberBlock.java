@@ -1,10 +1,10 @@
-package thederpgamer.modtemplate.element.block.systems.chambers;
+package username.modtemplate.element.block.systems.chambers;
 
 import api.config.BlockConfig;
 import org.schema.game.common.data.blockeffects.config.StatusEffectType;
 import org.schema.game.common.data.element.ElementInformation;
-import thederpgamer.modtemplate.ModTemplate;
-import thederpgamer.modtemplate.element.ElementManager;
+import username.modtemplate.ModTemplate;
+import username.modtemplate.element.ElementManager;
 
 public abstract class ChamberBlock {
 

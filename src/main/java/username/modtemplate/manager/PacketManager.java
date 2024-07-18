@@ -1,7 +1,7 @@
-package thederpgamer.modtemplate.manager;
+package username.modtemplate.manager;
 
 import api.network.packets.PacketUtil;
-import thederpgamer.modtemplate.network.client.ExampleClientPacket;
+import username.modtemplate.network.client.ExampleClientPacket;
 
 public class PacketManager {
 

@@ -1,10 +1,10 @@
-package thederpgamer.modtemplate.network.client;
+package username.modtemplate.network.client;
 
 import api.network.Packet;
 import api.network.PacketReadBuffer;
 import api.network.PacketWriteBuffer;
 import org.schema.game.common.data.player.PlayerState;
-import thederpgamer.modtemplate.ModTemplate;
+import username.modtemplate.ModTemplate;
 
 import java.io.IOException;
 
