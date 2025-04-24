@@ -56,6 +56,30 @@ public class ModTemplate extends StarMod {
 		ElementManager.initialize();
 	}
 
+	@Override
+	public void logInfo(String message) {
+		super.logInfo(message);
+		System.out.println("[INFO] " + message);
+	}
+
+	@Override
+	public void logWarning(String message) {
+		super.logWarning(message);
+		System.err.println("[WARNING] " + message);
+	}
+
+	@Override
+	public void logException(String message, Exception exception) {
+		super.logException(message, exception);
+		System.err.println("[EXCEPTION] " + message + "\n" + exception.getMessage() + "\n" + Arrays.toString(exception.getStackTrace()));
+	}
+
+	@Override
+	public void logFatal(String message, Exception exception) {
+		logException(message, exception);
+		if(GameCommon.getGameState().isOnServer()) GameServer.getServerState().addCountdownMessage(10, "Server will perform an emergency shutdown due to a fatal error: " + message);
+	}
+
 	private byte[] overwriteClass(String className, byte[] byteCode) {
 		byte[] bytes = null;
 		try {
